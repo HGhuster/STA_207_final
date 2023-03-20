@@ -3,8 +3,8 @@ title: "STA 207 Final Report"
 author: "Dawei Wang 921585918"
 date: '2023-03-19'
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -211,15 +211,21 @@ left_contrast_plot <- ggplot(data=Aggregate,aes(x=`contrast left`,y=`firing rate
 right_contrast_plot <- ggplot(data=Aggregate,aes(x=`contrast right`,y=`firing rate`,color=as.factor(`session ID`)))+geom_jitter(alpha=0.3)+ scale_x_continuous(breaks = c(0, 0.25, 0.5,1), labels = c("0", "0.25", "0.5",'1'))+labs(color = "session ID")
 
 left_contrast_plot+right_contrast_plot
-
 ```
 
-The above scatter plots show that the mean firing rate distributions in different sessions differ from each other, and in each session the distribution of neurons' mean firing rate is relatively concentrated at certain contrast left/right level. For example, session 1 tends to be concentrated around the highest level and session 5 seems to concentrated around the lowest level. We guess this may because neurons in each session are collected by sensors and the location of sensors have some random property (This guess is according to the discussion in the piazza forum). So we decide to consider the session ID as a `random effect`.
-
-<div style="text-align:center">
-![](Hot_plot.png){width=auto height=100%}
+<div style="text-align: center;">
+Figure 1: scatter plots of mean firing rate in different sessions under different left/right contrast level
 </div>
 
+
+`Figure 1` show that the mean firing rate distributions in different sessions differ from each other, and in each session the distribution of neurons' mean firing rate is relatively concentrated at certain contrast left/right level. For example, session 1 tends to be concentrated around the highest level and session 5 seems to concentrated around the lowest level. We guess this may because neurons in each session are collected by sensors and the location of sensors have some random property (This guess is according to the discussion in the piazza forum). So we decide to consider the session ID as a `random effect`.
+
+<div style="text-align:center">
+  <figure>
+    <img src="Hot_plot.png" alt="Hot Plot" style="width:auto; height:100%;">
+    <figcaption>Figure 2: Color maps for session 1-4</figcaption>
+  </figure>
+</div>
 
 
 
@@ -244,7 +250,11 @@ axis(1, at = c(0,0.33,0.66,0.99), labels = colnames(mat))
 axis(2, at = c(0,0.33,0.66,0.99), labels = rownames(mat), las = 2)
 ```
 
-The above color maps depict the mean firing rate in each sessions given the combination of contrasts presented. They show that the firing rate tend to be higher as the left/ritght contrast level ascending. However, they are not symmetry about the $Left\enspace Contrast=Right\enspace Contrast$ line, which means that the same level of left and right contrast tend to have different impact on the mean firing rate to mice, so we will treat the left contrast level and the right contrast level as two independent predictors. 
+<div style="text-align: center;">
+Figure 3: Color maps for session 5
+</div>
+
+The above color maps in `Figure 2` and `Figure 3` depict the mean firing rate in each sessions given the combination of contrasts presented. They show that the firing rate tend to be higher as the left/ritght contrast level ascending. However, they are not symmetry about the $Left\enspace Contrast=Right\enspace Contrast$ line, which means that the same level of left and right contrast tend to have different impact on the mean firing rate to mice, so we will treat the left contrast level and the right contrast level as two independent predictors. 
 
 Furthermore, as we can see in the color maps, the mean firing rate does not ascend or descend with the level of left/right contrast increasing in all sessions, we conclude that there is no linear relationship between the session level and left/right contrast level. So we will treat left/right contrast level as `categorical variables` when we built models.
 
@@ -252,7 +262,10 @@ Furthermore, as we can see in the color maps, the mean firing rate does not asce
 Furthermore, we are interested in the distribution of neurons mean firing rate over 0.4 second in each trial for specific session, so we calculated the mean firing rate of each neuron in across all trials for 5 sessions. Then we draw the density plot for each session to see the distribution of neurons' mean firing rate in across all trials. Neuron's mean firing rate across all trials is calculated as (certain neuron's total spikes in 0.4s for all trials of corresponding session/ number of trials in that session).
 
 <div style="text-align:center">
-![](neuron_density1_and_all.png){width=auto height=100%}
+  <figure>
+    <img src="neuron_density1_and_all.png" alt="Neuron Density" style="width:auto; height:100%;">
+    <figcaption>Figure 4: Aggregated neuron dentisy and session 1 neuron density</figcaption>
+  </figure>
 </div>
 
 ```{r,echo=FALSE,results=FALSE}
@@ -309,7 +322,11 @@ neuron_density_plot_5<- ggplot(neuron_data_5, aes(x = dens, fill = lines)) + geo
 neuron_density_plot_2+neuron_density_plot_3+neuron_density_plot_4+neuron_density_plot_5
 ```
 
-From the above density plots, we guess that there are three types of neurons in rats visual cortex that have different response level ranges when rats are exposed to visual stimulus. So we decide to divide all the neurons from all sessions into 3 clusters. Since we guess three types of neurons have different mean firing rate (low, middle, high), the mean firing rate under $4\times4=16$ kinds of visual stimulus combination were calculated for each neuron as there coordinate --- each neuron has a 16 dimensional vector whose entries are the mean firing rate under specific visual stimulus. 
+<div style="text-align: center;">
+Figure 5: Neuron density for session 2-5
+</div>
+
+From the above density plots in `Figure 4` and `Figure 5`, we guess that there are three types of neurons in rats visual cortex that have different response level ranges when rats are exposed to visual stimulus. So we decide to divide all the neurons from all sessions into 3 clusters. Since we guess three types of neurons have different mean firing rate (low, middle, high), the mean firing rate under $4\times4=16$ kinds of visual stimulus combination were calculated for each neuron as there coordinate --- each neuron has a 16 dimensional vector whose entries are the mean firing rate under specific visual stimulus. 
 
 To divide them into 3 clusters, we choose `K-means` clustering algorithm with euclidean distance and derive the labels vector for them. According to the cluster labels, we draw the histograms of neurons' mean firing rate for 5 sessions.
 
@@ -336,7 +353,10 @@ neuron_labels <- split(neuron_types$X0, f)
 
 
 <div style="text-align:center">
-![](clustered_session1_4.png){width=auto height=100%}
+  <figure>
+    <img src="clustered_session1_4.png" alt="Clustered Session" style="width:auto; height:100%;">
+    <figcaption>Figure 6: Clustered neurons mean firing rate in session 1-4</figcaption>
+  </figure>
 </div>
 
 ```{r,echo=FALSE,results=FALSE,message=FALSE,warning= FALSE}
@@ -376,7 +396,11 @@ ggsave(paste('clustered_session ',Session_ID,'.png',sep = ''))
 print(neuron_density_plot)
 ```
 
-As we can see from the above histograms, in all the session the range of mean firing rate of three clusters have tiny overlap, which means that the cluster labels we get can adequately divide the neurons in all the sessions into three clusters with different mean firing rate range. 
+<div style="text-align: center;">
+Figure 7: Clustered neurons mean firing rate in session 5
+</div>
+
+As we can see from the above histograms in `Figure 6` and `Figure 7`, in all the session the range of mean firing rate of three clusters have tiny overlap, which means that the cluster labels we get can adequately divide the neurons in all the sessions into three clusters with different mean firing rate range. 
 
 Furthermore, the sequence of mean firing rate's range for 3 clusters are consistent in all 5 sessions, which also means our clustering method that based on the mean firing rate for $4\times 4$ stimulus combinations works well. We also note that the relative amount of neurons in 3 clusters are also consistent among 5 session. For each session, `Cluster 1` has the highest mean firing rate range and lowest amount, meanwhile `Cluster 2` has the lowest mean firing rate range and highest amount, and `Cluster 3` has both the medium mean firing rate range and medium amount. However, there is no `Cluster 1` in session 5, which may means our clustering has some flaw.
 
@@ -539,7 +563,11 @@ resid_compare(models = list(additive_1,
               title.opt = TRUE)
 ```
 
-The first 3 columns diagnostic plots are from models that based on cluster 1 neurons, cluster 2 neurons and cluster 3 neurons respectively. The last columns is the model based on non-clustered dataset. 
+<div style="text-align: center;">
+Figure 8: Diagnostic Plots for cluster based models and non-cluster based model
+</div>
+
+The first 3 columns of `Figure 8` are from models that based on cluster 1 neurons, cluster 2 neurons and cluster 3 neurons respectively. The last columns is the model based on non-clustered dataset. 
 
 The residual plots show no obvious non-linearity. It can be seen that all the residuals histograms seem to have normal distribution. The Q-Q plots based on clustered dataset are little right skewed and the QQ plot based on non-clustered dataset are also little right skewed. To test the normality assumptions we conduct  Shapiro-Wilk normality test for above four additive models and find that all their p values are less than `0.001`, which means we can reject the null hypothesis that the error terms are not normally distributed in above full additive models. However, although the normality assumption is not adequate, since our sample size is relatively large, the affect of non-normality can be dismissed a lot by the central limit theorem.
 
@@ -669,8 +697,11 @@ legend("bottomright", legend = paste("AUC =", round(auc, 2)), bty = "n")
 
 ```
 
+<div style="text-align: center;">
+Figure 9: ROC curve
+</div>
 
-As we can see in the ROC curve, AUC of logistic regression is 0.69.
+As we can see in `Figure 9`, AUC of logistic regression is 0.69.
 
 # Discussion and Future work
 
@@ -681,14 +712,22 @@ Although we have derive some interesting conclusions for the questions we are in
 The pattern of neurons behavior across time are not considered in the analysis, so we also try to find out if the neurons' response have any time pattern. Instead of calculating the mean firing rate reduced by time, we did some preliminary analysis about the time trend of mean firing rate.
 
 <div style="text-align:center">
-![](Time_trend_session1_3 .png){width=auto height=100%}
+  <figure>
+    <img src="Time_trend_session1_3 .png" alt="Time Trend" style="width:auto; height:100%;">
+    <figcaption>Figure 10: mean firing rate's time trend for session 1-3</figcaption>
+  </figure>
 </div>
+
 
 <div style="text-align:center">
-![](Time_trend_session4_5.png){width=auto height=100%}
+  <figure>
+    <img src="Time_trend_session4_5.png" alt="Time Trend" style="width:auto; height:100%;">
+    <figcaption>Figure 11: mean firing rate's time trend for session 4-5</figcaption>
+  </figure>
 </div>
 
-As we can see the time trend plots above, the patterns of the first three time trends are quite similar, and the last two session's time trends are also quite similar. According to the background the first 3 session come from the same mouse and the remainder come from another mouse, we guess that this time trend pattern may related to some specific properties of each mouse. Maybe their genders are different or ages are different. However, due to time and information limitation, we can not test this in this paper. Future's work may investigate neurons' response by time  pattern.
+
+As we can see the time trend plots in `Figure 10` and `Figure 11`, the patterns in `Figure 10` are quite similar, and the patterns in `Figure 11` are also quite similar. According to the background the first 3 session come from the same mouse and the remainder come from another mouse, we guess that this time trend pattern may related to some specific properties of each mouse. Maybe their genders are different or ages are different. However, due to time and information limitation, we can not test this in this paper. Future's work may investigate neurons' response by time  pattern.
 
 # Reference
 
