@@ -1,7 +1,7 @@
 ---
 title: "STA 207 Final Report"
-author: "Dawei Wang"
-date: '2023-03-09'
+author: "Dawei Wang 921585918"
+date: '2023-03-19'
 output:
   html_document: default
   pdf_document: default
@@ -41,7 +41,7 @@ To understand how the brain processes sensory information under different condit
 
 # Background
 
-Steinmetz et al. used Neuropixels probes to record from approximately 30,000 neurons in 42 brain regions of mice performing a visual discrimination task. They found that neurons encoding visual stimuli and upcoming choices occupied restricted regions in the neocortex, basal ganglia, and midbrain. In this study, we will focused on the spike trains of neurons in the visual cortex, which were recorded as the activities of the neurons. Five sessions (among 39 sessions) from two mice (among 10 mice) were studied.In each session, the mouse was presented with visual stimuli on two screens positioned on both sides of it. Several hundred trials were conducted, and the visual stimuli were randomly varied in contrast levels that ranged from no stimulus to levels of 0.25, 0.5, and 1. The mouse used a wheel controlled by its forepaws to make decisions based on the visual stimuli, and a reward or penalty was given based on the accuracy of the mouse's decisions. The spike trains of neurons in the visual cortex were recorded as the activity of the neurons in the mice’s visual cortex. Our primary research questions are: 1. How do visual cortex neurons respond to stimuli presented on the left and right? 2. Can we predict trial outcomes by analyzing neural activities and stimuli? To answer the first question, we built a mixed effect model comprising two fixed-effect factors, left contrast and right contrast, and a random intercept for each session. For the second question, we developed regression models to identify the best-performing model. To evaluate the prediction performance, we used sensitivity and specificity measures based on the first 100 trials in Session 1. There is a 5-session dataset in which the first 3 session come from the same rat and the remainder two come from another rat.
+Steinmetz et al. used Neuropixels probes to record from approximately 30,000 neurons in 42 brain regions of mice performing a visual discrimination task. They found that neurons encoding visual stimuli and upcoming choices occupied restricted regions in the neocortex, basal ganglia, and midbrain. In this study, we will focused on the spike trains of neurons in the visual cortex, which were recorded as the activities of the neurons. Five sessions (among 39 sessions) from two mice (among 10 mice) were studied. The first 3 session are from on mouse and the remainder from another mouse. In each session, the mouse was presented with visual stimuli on two screens positioned on both sides of it. Several hundred trials were conducted, and the visual stimuli were randomly varied in contrast levels that ranged from no stimulus to levels of 0.25, 0.5, and 1. The mouse used a wheel controlled by its forepaws to make decisions based on the visual stimuli, and a reward or penalty was given based on the accuracy of the mouse's decisions. The spike trains of neurons in the visual cortex were recorded as the activity of the neurons in the mice’s visual cortex. Our primary research questions are: 1. How do visual cortex neurons respond to stimuli presented on the left and right? 2. Can we predict trial outcomes by analyzing neural activities and stimuli? To answer the first question, we built a mixed effect model comprising two fixed-effect factors, left contrast and right contrast, and a random intercept for each session. For the second question, we developed regression models to identify the best-performing model. To evaluate the prediction performance, we used sensitivity and specificity measures based on the first 100 trials in Session 1. 
 
 
 # Descriptive analysis
@@ -700,3 +700,10 @@ Niell, C. M., & Stryker, M. P. (2010). Modulation of visual responses by behavio
 Wang, Q., & Burkhalter, A. (2007). Area map of mouse visual cortex. Journal of Comparative Neurology, 502(3), 339-357.
 
 Frenkel, M. Y., Sawtell, N. B., Diogo, A. C. M., Yoon, B., Neve, R. L., & Bear, M. F. (2006). Instructive effect of visual experience in mouse visual cortex. Neuron, 51(3), 339-349.
+
+# Acknowledge
+
+Thanks for the classmates' discussion on Piazza.
+
+# Appendix
+Report URL: `https://github.com/HGhuster/STA_207_final`
